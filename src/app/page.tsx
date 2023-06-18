@@ -1,94 +1,68 @@
+"use client";
+
 import Image from 'next/image'
 import styles from './page.module.css'
+import SeatTile from './SeatTile';
+import { useState } from 'react';
+
+const ROWS = 4;
+const COLUMNS = 10;
 
 export default function Home() {
+
+  const [rows, setRows] = useState(ROWS);
+  const [columns, setColumns] = useState(COLUMNS);
+
+  const [selectedSeats, setSelectedSeats] = useState(new Set());
+
+  const handleClick = (row: number, column: number) => {
+    if (selectedSeats.has(`${row}-${column}`)) {
+      selectedSeats.delete(`${row}-${column}`);
+      setSelectedSeats(new Set(selectedSeats));
+    } else {
+      setSelectedSeats(new Set(selectedSeats).add(`${row}-${column}`));
+    }
+  } 
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+      <div>
+        <label htmlFor="rows">Rows</label>
+        <input
+          id="rows"
+          type="number"
+          value={rows}
+          onChange={e => setRows(parseInt(e.target.value))}
+        />
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+        <label htmlFor="columns">Columns</label>
+        <input
+          id="columns"
+          type="number"
+          value={columns}
+          onChange={e => setColumns(parseInt(e.target.value))}
         />
       </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+      <span>
+        selectedSeats: {Array.from(selectedSeats).join(', ')}
+      </span>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className={styles.seatGrid}>
+        <div className={styles.blackboardTile}>Blackboard</div>
+        {Array.from({length: rows}, (_, rowIndex) => (
+          <div key={rowIndex} className={styles.row}>
+            {Array.from({length: columns}, (_, columnIndex) => (
+              <SeatTile
+                key={columnIndex}
+                row={rowIndex}
+                column={columnIndex}
+                selected={selectedSeats.has(`${rowIndex}-${columnIndex}`)}
+                onClick={() => handleClick(rowIndex, columnIndex)}
+              />
+            ))}
+          </div>
+        ))}
       </div>
     </main>
   )
