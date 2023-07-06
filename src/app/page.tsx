@@ -6,6 +6,7 @@ import { useState } from 'react';
 import SeatsGrid from './SeatsGrid';
 import { distanceConstraintFrom, type Constraint, rowConstraintFrom } from './Constraint';
 import AddRowConstraintForm from './AddRowConstraintForm';
+import { PythonScript } from './PythonScript';
 
 const ROWS = 4;
 const COLUMNS = 10;
@@ -31,24 +32,6 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div>
-        <label htmlFor="rows">Rows</label>
-        <input
-          id="rows"
-          type="number"
-          value={rows}
-          onChange={e => setRows(parseInt(e.target.value))}
-        />
-
-        <label htmlFor="columns">Columns</label>
-        <input
-          id="columns"
-          type="number"
-          value={columns}
-          onChange={e => setColumns(parseInt(e.target.value))}
-        />
-      </div>
-
       <span>
         selectedSeats: {Array.from(selectedSeats).join(', ')}
       </span>
@@ -62,12 +45,18 @@ export default function Home() {
         pupils: {pupils.join(', ')}
       </span>
 
-      <SeatsGrid
-        rows={rows}
-        columns={columns}
-        selectedSeats={selectedSeats}
-        onClick={handleClick}
-      />
+      <section>
+        <SeatsGrid
+          rows={rows}
+          columns={columns}
+          selectedSeats={selectedSeats}
+          onClick={handleClick}
+          onAddColumn={() => setColumns(columns + 1)}
+          onAddRow={() => setRows(rows + 1)}
+          onRemoveColumn={() => setColumns(columns - 1)}
+          onRemoveRow={() => setRows(rows - 1)}
+        />
+      </section>
 
       <div>
         <label htmlFor="pupil1">Pupil 1</label>
@@ -117,6 +106,7 @@ export default function Home() {
           ))}
         </ul>
       </div>
+
     </main>
   )
 }

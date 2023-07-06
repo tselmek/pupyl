@@ -1,3 +1,18 @@
+.gridContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 52px;
+}
+
 .seatGrid {
   display: flex;
   flex-direction: column;
@@ -13,6 +28,49 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+}
+
+.addRow {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  height: 40px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  user-select: none;
+}
+
+.addRow:hover {
+  box-shadow: 0px 2px 6px 1px #999999;
+}
+
+.columnButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.addColumn {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  width: 40px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  user-select: none;
+}
+
+.addColumn:hover {
+  box-shadow: 0px 2px 6px 1px #999999;
 }
 
 .seatTile {
