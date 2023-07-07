@@ -7,15 +7,21 @@ interface SeatTileProps {
   column: number;
   selected?: boolean;
   onClick?: () => void;
+  pupil?: string;
 }
 
-export default function SeatTile({row, column, selected, onClick}: SeatTileProps) {
+export default function SeatTile({row, column, selected, onClick, pupil}: SeatTileProps) {
   return (
     <div
       className={classNames([styles.seatTile, selected && styles.selectedSeatTile])}
       onClick={onClick}
     >
-      {selected ? '🧒' : ''}
+      {selected
+        ? !pupil
+          ? ''
+          : pupil.slice(0, 2)
+        : ''
+      }
     </div>
   )
 }

@@ -1,3 +1,15 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--grid-gap);
+}
+
+.main > section {
+  flex: 1;
+  flex-basis: 600px;
+}
+
 .gridContainer {
   display: flex;
   flex-direction: row;
@@ -10,7 +22,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--grid-gap);
-  margin-left: calc(var(--tile-size) + var(--grid-gap));
 }
 
 .seatGrid {
@@ -42,6 +53,7 @@
   cursor: pointer;
   transition: all 0.1s ease-in-out;
   user-select: none;
+  font-size: 24px;
 }
 
 .addRow:hover {
@@ -52,6 +64,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--grid-gap);
+  margin-top: calc(var(--tile-size) + var(--grid-gap) + 2px);
   margin-bottom: calc(var(--tile-size) + var(--grid-gap));
 }
 
@@ -67,6 +80,7 @@
   cursor: pointer;
   transition: all 0.1s ease-in-out;
   user-select: none;
+  font-size: 24px;
 }
 
 .addColumn:hover {
@@ -92,6 +106,19 @@
   box-shadow: 0px 2px 6px 1px #999999;
 }
 
+.indicator {
+  min-width: var(--tile-size);
+  min-height: var(--tile-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  user-select: none;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid white;
+}
+
 .selectedSeatTile {
   background-color: #999999;
   color: #000;
@@ -109,4 +136,64 @@
   color: #fff;
   transition: all 0.1s ease-in-out;
   user-select: none;
-} 
+}
+
+.pupilContainer {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--grid-gap) / 2);
+  margin-bottom: 30px;
+}
+
+.pupilCard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: #EFEFEF;
+  border-radius: 4px;
+  padding: 10px;
+  gap: var(--grid-gap);
+}
+
+.pupilCard .pupilLine {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--grid-gap);
+}
+
+.pupilCard .pupilInfos {
+  flex: 1;
+  display: flex;
+  gap: var(--grid-gap);
+}
+
+.pupilCard .pupilInfos .pupilName {
+  font-weight: bold;
+}
+
+.pupilCard button {
+  border: none;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.newPupilForm {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--grid-gap);
+}
+
+.newPupilForm input {
+  padding: 5px;
+}
+
+.pupilLine select[multiple] {
+  height: 150px;
+  width: 200px;
+}

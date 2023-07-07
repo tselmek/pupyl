@@ -2,3 +2,11 @@
   --tile-size: 40px;
   --grid-gap: 10px;
 }
+
+select {
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid black;
+  background-color: white;
+  min-width: 100px;
+}
