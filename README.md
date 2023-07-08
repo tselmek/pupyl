@@ -27,7 +27,10 @@ Classroom layout and pupil distribution plan generator
 
 Yes, your data never leaves the browser and the application uses no cookie to function.
 
+#### Can I request a feature or suggest an improvement?
+
+Yes. You can either open an issue or email me at [contact@antoine-jesus.com](mailto:contact@antoine-jesus.com).
+
 #### Can I re-use this code?
 
 Yes.
-
