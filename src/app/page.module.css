@@ -198,8 +198,22 @@
   width: 200px;
 }
 
+.editorContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--grid-gap);
+  justify-content: center;
+}
+
 .constraintsEditor th {
   padding: 2px;
+}
+
+.constraintsEditor thead th {
+  font-size: 12px;
+  max-width: 40px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .constraintsEditor tbody th {
@@ -222,8 +236,8 @@
   position: relative;
 } 
 
-.constraintsEditor td:hover::after,
-.constraintsEditor th:hover::after {
+.constraintsEditor tbody td:hover::after,
+.constraintsEditor tbody th:hover::after {
   content: "";
   position: absolute;
   background-color: #EFEFEF;

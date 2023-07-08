@@ -7,7 +7,7 @@ import { type Constraint, DistanceConstraintData, RowConstraintData, rowConstrai
 import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject } from './algo';
 import { PupilCard } from './PupilCard';
 import { Dictionary } from 'lodash';
-import { ConstraintsEditor, DistanceConstraintsEditor } from './ConstraintsEditor';
+import { ConstraintsEditor } from './ConstraintsEditor';
 
 const ROWS = 4;
 const COLUMNS = 10;
@@ -146,12 +146,8 @@ export default function Home() {
                 setRowConstraints(rowConstraints.filter(c => c.pupil !== pupil));
                 setDistanceConstraints(distanceConstraints.filter(c => c.pupil1 !== pupil && c.pupil2 !== pupil));
               }}
-              rows={rows}
-              allPupils={pupils}
               selfRowConstraint={rowConstraints.find(c => c.pupil === pupil)}
               selfDistanceConstraints={distanceConstraints.filter(c => c.pupil1 === pupil || c.pupil2 === pupil)}
-              onAddRowConstraint={handleAddRowConstraint}
-              onRemoveRowConstraint={handleRemoveRowConstraint}
             />
           ))}
         </div>
@@ -170,12 +166,20 @@ export default function Home() {
           onRemoveRow={handleRemoveRow}
         />
 
-        <ConstraintsEditor
-          pupils={pupils}
-          distanceConstraints={distanceConstraints}
-          onAddConstraint={handleAddDistanceConstraint}
-          onRemoveConstraint={handleRemoveDistanceConstraint}
-        />
+        {pupils.length > 0 && (
+          <div className={styles.editorContainer}>
+            <ConstraintsEditor
+              pupils={pupils}
+              rows={rows}
+              rowConstraints={rowConstraints}
+              distanceConstraints={distanceConstraints}
+              onAddRowConstraint={handleAddRowConstraint}
+              onRemoveRowConstraint={handleRemoveRowConstraint}
+              onAddDistanceConstraint={handleAddDistanceConstraint}
+              onRemoveDistanceConstraint={handleRemoveDistanceConstraint}
+            />
+          </div>
+        )}
       </section>
 
     </main>
