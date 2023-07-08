@@ -1,3 +1,5 @@
+import styles from "./page.module.css";
+
 import { DistanceConstraintData } from "./Constraint";
 
 interface ConstraintsEditorProps {
@@ -14,23 +16,23 @@ export const ConstraintsEditor = ({
   onRemoveConstraint
 }: ConstraintsEditorProps) => {
   return (
-    <table>
+    <table className={styles.constraintsEditor}>
       <thead>
         <tr>
-          <th scope="col"></th>
-          {pupils.map((pupil, index) => (
+          <th scope="col"/>
+          {[...pupils].reverse().slice(0, -1).map((pupil, index) => (
             <th key={index} scope="col">{pupil}</th>
           ))}
         </tr>
       </thead>
 
       <tbody>
-        {pupils.map((pupil1, index1) => (
+        {pupils.slice(0, -1).map((pupil1, index1) => (
           <tr key={index1}>
             <th scope="row">{pupil1}</th>
-            {pupils.map((pupil2, index2) => (
+            {[...pupils].reverse().slice(0, -1).map((pupil2, index2) => (
               <td key={index2}>
-                {index1 < index2 && (
+                {pupils.length - index1 - 1 > index2 && (
                   <input
                     type="checkbox"
                     checked={!!distanceConstraints.find(c => c.pupil1 === pupil1 && c.pupil2 === pupil2)}

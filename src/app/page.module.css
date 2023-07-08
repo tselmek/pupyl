@@ -197,3 +197,39 @@
   height: 150px;
   width: 200px;
 }
+
+.constraintsEditor th {
+  padding: 2px;
+}
+
+.constraintsEditor tbody th {
+  text-align: left;
+}
+
+.constraintsEditor tbody td {
+  text-align: center;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+/* Highlight currently hovered row */
+.constraintsEditor tbody tr:hover td, .constraintsEditor tbody tr:hover th {
+  background-color: #EFEFEF;
+}
+
+/* Highlight currently hovered column */
+.constraintsEditor td, .constraintsEditor th {
+  position: relative;
+} 
+
+.constraintsEditor td:hover::after,
+.constraintsEditor th:hover::after {
+  content: "";
+  position: absolute;
+  background-color: #EFEFEF;
+  left: 0;
+  top: -5000px;
+  height: 10000px;
+  width: 100%;
+  z-index: -1;
+}

@@ -10,3 +10,12 @@ select {
   background-color: white;
   min-width: 100px;
 }
+
+table {
+  overflow: hidden;
+}
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
