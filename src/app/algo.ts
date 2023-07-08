@@ -270,15 +270,17 @@ const VARIATIONS = 300;
 const testVariations = (
   constraints: ParsedConstraint[],
   pupils: Dictionary<PupilObject>
-): void => {
+): number => {
   for (let i = 0; i < ITERATIONS; i++) {
     const variations: Variation[] = range(VARIATIONS).map(() => generateVariation(constraints, pupils));
     const [pupil1, pupil2, score]: Variation = last(sortBy(variations, ([pupil1, pupil2, score]) => score))!;
 
-    console.log("Best variation", pupil1, pupil2, score);
-
     swap(pupil1, pupil2);
   }
+
+  const finalScore = sumBy(constraints, evaluateConstraint);
+
+  return finalScore;
 }
 
 
@@ -286,7 +288,7 @@ export const generatePlan = (
   inputPupils: Pupil[],
   inputSeats: InputSeat[],
   inputConstraints: Constraint[]
-): [Dictionary<PupilObject>, Dictionary<SeatObject>] => {
+): [Dictionary<PupilObject>, Dictionary<SeatObject>, number] => {
   const pupils = parsePupils(inputPupils);
   const seats = parseSeats(inputSeats);
   const constraints = parseConstraints(inputConstraints, pupils);
@@ -300,7 +302,7 @@ export const generatePlan = (
   console.log("Pupils", pupils);
   console.log("Seats", seats);
 
-  testVariations(constraints, pupils);
+  const bestScore = testVariations(constraints, pupils);
 
-  return [pupils, seats];
+  return [pupils, seats, bestScore];
 }
