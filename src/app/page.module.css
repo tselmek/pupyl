@@ -5,9 +5,51 @@
   gap: var(--grid-gap);
 }
 
-.main > section {
+.main > section.left {
   flex: 1;
+  flex-basis: 300px;
+}
+
+.left form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
+  align-items: stretch;
+}
+
+.pupilLine {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--grid-gap);
+}
+
+.exportButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--grid-gap);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  user-select: none;
+}
+
+.exportButton .exportIcon {
+  font-size: 24px;
+}
+
+.main > section.right {
+  flex: 2;
   flex-basis: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.right > button {
+  height: 40px;
+  width: 200px;
 }
 
 .gridContainer {
@@ -49,7 +91,7 @@
   border-color: black;
   border-style: solid;
   border-width: 1px;
-  height: var(--tile-size);
+  height: calc(var(--tile-size) * 0.75);
   cursor: pointer;
   transition: all 0.1s ease-in-out;
   user-select: none;
@@ -76,7 +118,7 @@
   border-color: black;
   border-style: solid;
   border-width: 1px;
-  width: var(--tile-size);
+  width: calc(var(--tile-size) * 0.75);
   cursor: pointer;
   transition: all 0.1s ease-in-out;
   user-select: none;
@@ -88,18 +130,20 @@
 }
 
 .seatTile {
-  min-width: var(--tile-size);
-  min-height: var(--tile-size);
+  width: var(--tile-size);
+  height: var(--tile-size);
   border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 14px;
   cursor: pointer;
   background-color: #fff;
   color: #000;
   transition: all 0.1s ease-in-out;
   user-select: none;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .seatTile:hover {
@@ -196,4 +240,54 @@
 .pupilLine select[multiple] {
   height: 150px;
   width: 200px;
+}
+
+.editorContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--grid-gap);
+  justify-content: center;
+}
+
+.constraintsEditor th {
+  padding: 2px;
+}
+
+.constraintsEditor thead th {
+  font-size: 14px;
+  max-width: 45px;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.constraintsEditor tbody th {
+  text-align: left;
+}
+
+.constraintsEditor tbody td {
+  text-align: center;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+/* Highlight currently hovered row */
+.constraintsEditor tbody tr:hover td, .constraintsEditor tbody tr:hover th {
+  background-color: #EFEFEF;
+}
+
+/* Highlight currently hovered column */
+.constraintsEditor td, .constraintsEditor th {
+  position: relative;
+} 
+
+.constraintsEditor tbody td:hover::after,
+.constraintsEditor tbody th:hover::after {
+  content: "";
+  position: absolute;
+  background-color: #EFEFEF;
+  left: 0;
+  top: -5000px;
+  height: 10000px;
+  width: 100%;
+  z-index: -1;
 }

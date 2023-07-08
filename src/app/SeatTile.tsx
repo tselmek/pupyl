@@ -19,7 +19,7 @@ export default function SeatTile({row, column, selected, onClick, pupil}: SeatTi
       {selected
         ? !pupil
           ? ''
-          : pupil.slice(0, 2)
+          : pupil
         : ''
       }
     </div>
