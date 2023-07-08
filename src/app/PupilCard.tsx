@@ -2,8 +2,7 @@ import { BsTrashFill } from 'react-icons/bs';
 import { ChangeEvent, useState } from 'react';
 
 import styles from './page.module.css';
-import { DistanceConstraintData, RowConstraintData, rowConstraintFrom } from './Constraint';
-import { on } from 'events';
+import { DistanceConstraintData, RowConstraintData } from './Constraint';
 
 interface PupilCardProps {
   pupil: string;
@@ -14,8 +13,6 @@ interface PupilCardProps {
   selfDistanceConstraints: DistanceConstraintData[] | undefined;
   onAddRowConstraint: (pupil: string, row: number) => void;
   onRemoveRowConstraint: (pupil: string) => void;
-  onAddDistanceConstraint: (pupil: string, otherPupil: string) => void;
-  onRemoveDistanceConstraint: (pupil: string, otherPupil: string) => void;
 }
 
 export const PupilCard = ({
@@ -25,36 +22,11 @@ export const PupilCard = ({
   allPupils,
   selfDistanceConstraints,
   selfRowConstraint,
-  onAddDistanceConstraint,
   onAddRowConstraint,
-  onRemoveDistanceConstraint,
   onRemoveRowConstraint
 }: PupilCardProps) => {
 
   const [enableRowConstraint, setEnableRowConstraint] = useState<boolean>(false);
-  const [enableDistanceConstraint, setEnableDistanceConstraint] = useState<boolean>(false);
-  const [distancePupils, setDistancePupils] = useState<Set<string>>(new Set());
-
-  const handleSelectDistanceOption = (event: ChangeEvent<HTMLSelectElement>) => {
-    const { options } = event.target;
-
-    const newDistancePupils = new Set<string>(distancePupils);
-    
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      const otherPupil = options[i].value;
-
-      if (options[i].selected) {
-        if (distancePupils.has(otherPupil)) {
-          newDistancePupils.delete(otherPupil);
-          onRemoveDistanceConstraint(pupil, otherPupil);
-        } else {
-          newDistancePupils.add(otherPupil);
-          onAddDistanceConstraint(pupil, otherPupil);
-        }
-      }
-    }
-    setDistancePupils(newDistancePupils);
-  };
 
   const handleSelectRowOption = (event: ChangeEvent<HTMLSelectElement>) => {
     const { options } = event.target;
@@ -76,18 +48,6 @@ export const PupilCard = ({
     setEnableRowConstraint(!enableRowConstraint)
   };
 
-  const handleToggleDistanceConstraint = () => {
-    if (selfDistanceConstraints) {
-      selfDistanceConstraints.forEach(({pupil1, pupil2}) => {
-        onRemoveDistanceConstraint(pupil1, pupil2);
-      });
-      setDistancePupils(new Set());
-    }
-    setEnableDistanceConstraint(!enableDistanceConstraint)
-  };
-
-  console.log('render', pupil, selfRowConstraint, selfDistanceConstraints);
-
   return (
     <div className={styles.pupilCard}>
       <div className={styles.pupilLine}>
@@ -96,9 +56,6 @@ export const PupilCard = ({
 
           <label htmlFor="row-constraint">Row constraint</label>
           <input type="checkbox" id="row-constraint" checked={enableRowConstraint} onClick={handleToggleRowConstraint}/>
-
-          <label htmlFor="distance-constraint">Distance constraint</label>
-          <input type="checkbox" id="distance-constraint" checked={enableDistanceConstraint} onClick={handleToggleDistanceConstraint}/>
         </div>
         <div className={styles.pupilActions}>
           <button onClick={onRemove}>
@@ -122,20 +79,6 @@ export const PupilCard = ({
               <option key={rowIndex} value={rowIndex}>{rowIndex}</option>
             ))}
           </select>
-        </div>
-      )}
-
-      {enableDistanceConstraint && (
-        <div className={styles.pupilLine}>
-          <label htmlFor="distance-constraint">Must be far away from</label>
-          <select id="distance-constraint" multiple value={Array.from(distancePupils)} onChange={handleSelectDistanceOption}>
-            {allPupils.filter(otherPupil => otherPupil !== pupil).map(otherPupil => (
-              <option key={otherPupil} value={otherPupil}>{otherPupil}</option>
-            ))} 
-          </select> 
-          <span>
-            {Array.from(distancePupils).join(', ')}
-          </span>
         </div>
       )}
     </div>

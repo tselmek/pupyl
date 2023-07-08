@@ -7,6 +7,7 @@ import { type Constraint, DistanceConstraintData, RowConstraintData, rowConstrai
 import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject } from './algo';
 import { PupilCard } from './PupilCard';
 import { Dictionary } from 'lodash';
+import { ConstraintsEditor, DistanceConstraintsEditor } from './ConstraintsEditor';
 
 const ROWS = 4;
 const COLUMNS = 10;
@@ -151,8 +152,6 @@ export default function Home() {
               selfDistanceConstraints={distanceConstraints.filter(c => c.pupil1 === pupil || c.pupil2 === pupil)}
               onAddRowConstraint={handleAddRowConstraint}
               onRemoveRowConstraint={handleRemoveRowConstraint}
-              onAddDistanceConstraint={handleAddDistanceConstraint}
-              onRemoveDistanceConstraint={handleRemoveDistanceConstraint}
             />
           ))}
         </div>
@@ -169,6 +168,13 @@ export default function Home() {
           onAddRow={handleAddRow}
           onRemoveColumn={handleRemoveColumn}
           onRemoveRow={handleRemoveRow}
+        />
+
+        <ConstraintsEditor
+          pupils={pupils}
+          distanceConstraints={distanceConstraints}
+          onAddConstraint={handleAddDistanceConstraint}
+          onRemoveConstraint={handleRemoveDistanceConstraint}
         />
       </section>
 

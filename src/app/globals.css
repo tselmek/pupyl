@@ -1,6 +1,6 @@
 * {
   --tile-size: 40px;
-  --grid-gap: 10px;
+  --grid-gap: 4px;
 }
 
 select {
