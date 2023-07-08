@@ -8,6 +8,7 @@ import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject } from './a
 import { PupilCard } from './PupilCard';
 import { Dictionary } from 'lodash';
 import { ConstraintsEditor } from './ConstraintsEditor';
+import { LuClipboardCopy } from 'react-icons/lu';
 
 const ROWS = 4;
 const COLUMNS = 10;
@@ -22,7 +23,7 @@ export default function Home() {
   const [distanceConstraints, setDistanceConstraints] = useState<DistanceConstraintData[]>([]);
 
   const [pupils, setPupils] = useState<string[]>([]);
-  const [newPupil, setNewPupil] = useState<string>("");
+  const [newPupils, setNewPupils] = useState<string>("");
 
   const [generatedPlanSeats, setGeneratedPlanSeats] = useState<Dictionary<SeatObject> | undefined>(undefined);
 
@@ -112,32 +113,45 @@ export default function Home() {
     ));
   }
 
+  const handleExportPupils = () => {
+    const pupilsString = pupils.join(",");
+    navigator.clipboard.writeText(pupilsString);
+    alert(`✅ Pupils copied to clipboard`);
+  }
+
+  const parsedPupils = newPupils.split(",").map(p => p.trim()).filter(p => p !== "");
+
   return (
     <main className={styles.main}>
       <section className={styles.left}>
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            if (newPupil.trim() === "") return;
-            setPupils([...pupils, newPupil]);
-            setNewPupil("");
+            if (newPupils.trim() === "") return;
+            setPupils([...pupils, ...parsedPupils]);
+            setNewPupils("");
           }}
           className={styles.newPupilForm}
         >
-          <label htmlFor="pupil">Add pupil</label>
-          <input id="pupil" value={newPupil} onChange={e => setNewPupil(e.target.value)} type="text" placeholder="Pupil name"/>
-          <input type="submit" hidden/>
+          <label htmlFor="pupil">Import pupils</label>
+          <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Pupil name"/>
+          <input value="Import" type="submit" disabled={parsedPupils.length === 0}/>
 
-          <button
-            onClick={handleGenerate}
-            disabled={pupils.length === 0 || selectedSeats.size === 0}
-          >
-            Generate plan
-          </button>
+          {newPupils !== "" && (
+            <span>{parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}</span>
+          )}
+
+          <div className={styles.pupilLine}>
+            <span className={styles.pupilCount}>{pupils.length} pupils</span>
+
+            <button onClick={handleExportPupils} disabled={pupils.length === 0} className={styles.exportButton}>
+              Export pupils <LuClipboardCopy className={styles.exportIcon}/>
+            </button>
+          </div>
         </form>
 
         <div className={styles.pupilContainer}>
-          {pupils.map((pupil: string, index: number) => (
+          {pupils.sort().map((pupil: string, index: number) => (
             <PupilCard
               key={index}
               pupil={pupil}
@@ -154,6 +168,13 @@ export default function Home() {
       </section>
 
       <section className={styles.right}>
+        <button
+          onClick={handleGenerate}
+          disabled={pupils.length === 0 || selectedSeats.size === 0}
+        >
+          Generate plan
+        </button>
+
         <SeatsGrid
           rows={rows}
           columns={columns}

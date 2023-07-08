@@ -10,9 +10,46 @@
   flex-basis: 300px;
 }
 
+.left form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
+  align-items: stretch;
+}
+
+.pupilLine {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--grid-gap);
+}
+
+.exportButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--grid-gap);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  user-select: none;
+}
+
+.exportButton .exportIcon {
+  font-size: 24px;
+}
+
 .main > section.right {
   flex: 2;
   flex-basis: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.right > button {
+  height: 40px;
+  width: 200px;
 }
 
 .gridContainer {
