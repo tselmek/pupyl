@@ -114,7 +114,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <section>
+      <section className={styles.left}>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -153,7 +153,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
+      <section className={styles.right}>
         <SeatsGrid
           rows={rows}
           columns={columns}
