@@ -3,6 +3,8 @@
 
 Classroom layout and pupil distribution plan generator
 
+![](/public/screenshot-example.png)
+
 ## Usage
 
 1. Create your classroom layout in the right panel
