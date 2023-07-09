@@ -138,7 +138,7 @@ export default function Home() {
           className={styles.newPupilForm}
         >
           <label htmlFor="pupil">Import pupils</label>
-          <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Pupil name"/>
+          <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Comma-separated list of pupil names"/>
           <input value="Import" type="submit" disabled={parsedPupils.length === 0}/>
 
           {newPupils !== "" && (
