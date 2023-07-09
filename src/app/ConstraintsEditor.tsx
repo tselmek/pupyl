@@ -4,7 +4,7 @@ import { DistanceConstraintData, RowConstraintData } from "./Constraint";
 
 interface ConstraintsEditorProps {
   pupils: string[];
-  rows: number;
+  availableRows: number[];
   distanceConstraints: DistanceConstraintData[];
   rowConstraints: RowConstraintData[];
   onAddDistanceConstraint: (pupil1: string, pupil2: string) => void;
@@ -15,7 +15,7 @@ interface ConstraintsEditorProps {
 
 export const ConstraintsEditor = ({
   pupils,
-  rows,
+  availableRows,
   rowConstraints,
   distanceConstraints,
   onAddDistanceConstraint,
@@ -52,8 +52,8 @@ export const ConstraintsEditor = ({
                 }}
               >
                 <option value={undefined}></option>
-                {[...Array.from({length: rows})].map((_, index) => (
-                  <option key={index} value={index}>{index}</option>
+                {availableRows.map((row: number) => (
+                  <option key={row} value={row}>{row}</option>
                 ))}
               </select>
             </td>

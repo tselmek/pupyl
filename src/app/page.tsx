@@ -120,6 +120,10 @@ export default function Home() {
   }
 
   const parsedPupils = newPupils.split(",").map(p => p.trim()).filter(p => p !== "");
+  const availableRows = Array.from({ length: rows }, (_, index) => index).filter(row => {
+    const rowString = `R${row}`;
+    return Array.from(selectedSeats).some(seat => seat.startsWith(rowString));
+  });
 
   return (
     <main className={styles.main}>
@@ -191,7 +195,7 @@ export default function Home() {
           <div className={styles.editorContainer}>
             <ConstraintsEditor
               pupils={pupils}
-              rows={rows}
+              availableRows={availableRows}
               rowConstraints={rowConstraints}
               distanceConstraints={distanceConstraints}
               onAddRowConstraint={handleAddRowConstraint}
