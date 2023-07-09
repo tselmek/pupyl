@@ -4,7 +4,7 @@ import { DistanceConstraintData, RowConstraintData } from "./Constraint";
 
 interface ConstraintsEditorProps {
   pupils: string[];
-  rows: number;
+  availableRows: number[];
   distanceConstraints: DistanceConstraintData[];
   rowConstraints: RowConstraintData[];
   onAddDistanceConstraint: (pupil1: string, pupil2: string) => void;
@@ -15,7 +15,7 @@ interface ConstraintsEditorProps {
 
 export const ConstraintsEditor = ({
   pupils,
-  rows,
+  availableRows,
   rowConstraints,
   distanceConstraints,
   onAddDistanceConstraint,
@@ -29,19 +29,20 @@ export const ConstraintsEditor = ({
         <tr>
           <th scope="col"/>
           <th scope="col">Row</th>
-          {[...pupils].reverse().slice(0, -1).map((pupil, index) => (
-            <th key={index} scope="col">{pupil}</th>
+          {[...pupils].reverse().slice(0, -1).map((pupil) => (
+            <th key={pupil} scope="col">{pupil}</th>
           ))}
         </tr>
       </thead>
 
       <tbody>
         {pupils.map((pupil1, index1) => (
-          <tr key={index1}>
+          <tr key={pupil1}>
             <th scope="row">{pupil1}</th>
             <td>
               <select
                 value={rowConstraints.find(c => c.pupil === pupil1)?.position ?? ''}
+                disabled={availableRows.length === 0}
                 onChange={e => {
                   const position = parseInt(e.target.value);
                   if (isNaN(position)) {
@@ -52,13 +53,13 @@ export const ConstraintsEditor = ({
                 }}
               >
                 <option value={undefined}></option>
-                {[...Array.from({length: rows})].map((_, index) => (
-                  <option key={index} value={index}>{index}</option>
+                {availableRows.map((row) => (
+                  <option key={row} value={row}>{row}</option>
                 ))}
               </select>
             </td>
             {[...pupils].reverse().slice(0, -1).map((pupil2, index2) => (
-              <td key={index2}>
+              <td key={pupil2}>
                 {pupils.length - index1 - 1 > index2 && (
                   <input
                     type="checkbox"

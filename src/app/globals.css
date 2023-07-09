@@ -1,19 +1,39 @@
 * {
   --tile-size: 60px;
   --grid-gap: 4px;
+
+  --yellow: #f0e88b;
+  --green-1: #71bca3;
+  --green-1-light: #c5e6d9;
+  --beige: #fff9e3;
+  --light-green: #d4dda2;
+  --grey: #b7b398;
+}
+
+html {
+  margin: 0px;
+  min-height: 100vh;
+}
+
+body {
+  padding: 16px;
+  background-color: #71bca3;
+  background-image:  linear-gradient(#A9D6C7 1.3px, transparent 1.3px), linear-gradient(to right, #A9D6C7 1.3px, #71bca3 1.3px);
+  background-size: 26px 26px;
 }
 
 select {
   font-size: 1rem;
   padding: 0rem 0.25rem;
-  border: 1px solid black;
-  background-color: white;
+  border: 1px solid #000;
+  background-color: #fff;
   min-width: 50px;
 }
 
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
+  accent-color: #000;
 }
 
 table {
@@ -22,6 +42,9 @@ table {
 }
 
 table, th, td {
-  border: 1px solid white;
   border-collapse: collapse;
+}
+
+button {
+  background-color: transparent;
 }

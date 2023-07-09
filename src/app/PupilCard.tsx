@@ -25,7 +25,7 @@ export const PupilCard = ({
         </div>
         <div className={styles.pupilActions}>
           <button onClick={onRemove}>
-            <BsTrashFill />
+            <BsTrashFill/>
           </button>
         </div>
       </div>

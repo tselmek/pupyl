@@ -2,18 +2,26 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: var(--grid-gap);
+  gap: calc(8 * var(--grid-gap));
+}
+
+.main > section {
+  border-radius: 16px;
+  padding: 24px;
+  background-image: url("../../public/cardboard.png");
+  box-shadow: 0px 2px 10px 2px #00000044;
 }
 
 .main > section.left {
   flex: 1;
   flex-basis: 300px;
+  background-color: var(--green-1-light);
 }
 
 .left form {
   display: flex;
   flex-direction: column;
-  gap: var(--grid-gap);
+  gap: calc(2 * var(--grid-gap));
   align-items: stretch;
 }
 
@@ -22,6 +30,34 @@
   flex-direction: row;
   align-items: center;
   gap: var(--grid-gap);
+}
+
+.pushpinLeft {
+  position: absolute;
+  top: -2px;
+  left: 12px;
+  user-select: none;
+  filter: drop-shadow(20px 20px 4px #00000044);
+}
+
+
+.pushpinRight {
+  position: absolute;
+  top: 6px;
+  right: 20px;
+  user-select: none;
+  filter: drop-shadow(20px 20px 4px #00000044);
+}
+
+.scotch {
+  position: absolute;
+  top: -25px;
+  left: auto;
+  margin-left: min(10%, 40px);
+  height: 45px;
+  width: 70%;
+  background-color: #fff8;
+  box-shadow: 0px 0px 4px 1px #00000044;
 }
 
 .exportButton {
@@ -40,11 +76,12 @@
 }
 
 .main > section.right {
-  flex: 2;
+  flex: 3;
   flex-basis: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--beige);
 }
 
 .right > button {
@@ -73,6 +110,11 @@
   align-items: center;
   margin: 20px;
   gap: var(--grid-gap);
+  border-radius: 2px;
+  padding: 36px 48px;
+  background-color: #fff;
+  box-shadow: 2px 4px 4px 0.5px #00000044;
+  transform: rotate(0.5deg);
 }
 
 .row {
@@ -138,7 +180,7 @@
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: var(--beige);
   color: #000;
   transition: all 0.1s ease-in-out;
   user-select: none;
@@ -158,13 +200,13 @@
   align-items: center;
   font-size: 20px;
   user-select: none;
-  background-color: #fff;
+  background-color: transparent;
   color: #000;
-  border: 1px solid white;
+  border: 1px solid transparent;
 }
 
 .selectedSeatTile {
-  background-color: #999999;
+  background-color: var(--green-1);
   color: #000;
 }
 
@@ -185,7 +227,7 @@
 .pupilContainer {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--grid-gap) / 2);
+  gap: var(--grid-gap);
   margin-bottom: 30px;
 }
 
@@ -193,10 +235,14 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  background-color: #EFEFEF;
-  border-radius: 4px;
+  background-color: #eee6;
+  border-radius: 8px;
   padding: 10px;
   gap: var(--grid-gap);
+}
+
+.pupilCard:hover {
+  background-color: #eee;
 }
 
 .pupilCard .pupilLine {
@@ -247,6 +293,11 @@
   flex-direction: row;
   gap: var(--grid-gap);
   justify-content: center;
+  background-color: #fff;
+  box-shadow: 2px 4px 4px 0.5px #00000044;
+  padding: 24px;
+  transform: rotate(-0.5deg);
+  margin-top: 30px;
 }
 
 .constraintsEditor th {
@@ -272,7 +323,7 @@
 
 /* Highlight currently hovered row */
 .constraintsEditor tbody tr:hover td, .constraintsEditor tbody tr:hover th {
-  background-color: #EFEFEF;
+  background-color: var(--green-1);
 }
 
 /* Highlight currently hovered column */
@@ -284,7 +335,7 @@
 .constraintsEditor tbody th:hover::after {
   content: "";
   position: absolute;
-  background-color: #EFEFEF;
+  background-color: var(--green-1);
   left: 0;
   top: -5000px;
   height: 10000px;

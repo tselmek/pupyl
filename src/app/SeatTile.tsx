@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './page.module.css';
 import classNames from 'classnames';
+import { MdTableRestaurant } from 'react-icons/md';
 
 interface SeatTileProps {
   row: number;
@@ -18,7 +19,7 @@ export default function SeatTile({row, column, selected, onClick, pupil}: SeatTi
     >
       {selected
         ? !pupil
-          ? ''
+          ? <MdTableRestaurant size={24}/>
           : pupil
         : ''
       }
