@@ -174,7 +174,7 @@ export default function Home() {
       <section className={styles.right}>
         <button
           onClick={handleGenerate}
-          disabled={pupils.length === 0 || selectedSeats.size === 0}
+          disabled={pupils.length > selectedSeats.size}
         >
           Generate plan
         </button>
@@ -193,6 +193,7 @@ export default function Home() {
 
         {pupils.length > 0 && (
           <div className={styles.editorContainer}>
+            <div className={styles.scotch} />
             <ConstraintsEditor
               pupils={pupils}
               availableRows={availableRows}

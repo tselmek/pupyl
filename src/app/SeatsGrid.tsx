@@ -1,11 +1,12 @@
 import React from 'react';
-import {BiArrowFromLeft, BiArrowFromTop, BiArrowToLeft, BiArrowToRight, BiArrowToTop} from 'react-icons/bi';
+import {BiArrowFromLeft, BiArrowFromTop, BiArrowToLeft, BiArrowToTop} from 'react-icons/bi';
 
 import styles from './page.module.css';
 
 import SeatTile from './SeatTile';
 import { Seat, SeatObject } from './algo';
 import { Dictionary } from 'lodash';
+import Image from 'next/image';
 
 
 const noop = () => {};
@@ -35,6 +36,9 @@ export default function SeatsGrid({
 }: SeatGridProps) {
   return (
     <div className={styles.seatGrid}>
+
+      <Image src="/icons8-pushpin.png" alt="Pushpin" width={50} height={50} className={styles.pushpinLeft}/>
+      <Image src="/icons8-pushpin.png" alt="Pushpin" width={50} height={50} className={styles.pushpinRight}/>
 
       <div className={styles.blackboardTile}>Blackboard</div>
 
