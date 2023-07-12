@@ -5,17 +5,31 @@
   gap: calc(8 * var(--grid-gap));
 }
 
-.main > section {
-  border-radius: 16px;
-  padding: 24px;
-  background-image: url("../../public/cardboard.png");
-  box-shadow: 0px 2px 10px 2px #00000044;
-}
 
 .main > section.left {
+  padding: 0px;
+  border-radius: 0px;
   flex: 1;
   flex-basis: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--grid-gap));
+}
+
+.left .header {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 8px 16px;
+}
+
+.left .pupils {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 8px 24px;
+  flex: 1;
   background-color: var(--green-1-light);
+  background-image: url("../../public/cardboard.png");
+  box-shadow: 0px 2px 10px 2px #00000044;
 }
 
 .left form {
@@ -82,6 +96,10 @@
   flex-direction: column;
   align-items: center;
   background-color: var(--beige);
+  border-radius: 16px;
+  padding: 24px;
+  background-image: url("../../public/cardboard.png");
+  box-shadow: 0px 2px 10px 2px #00000044;
 }
 
 .right > button {

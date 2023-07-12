@@ -128,50 +128,58 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <section className={styles.left}>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (newPupils.trim() === "") return;
-            setPupils([...pupils, ...parsedPupils]);
-            setNewPupils("");
-          }}
-          className={styles.newPupilForm}
-        >
-          <label htmlFor="pupil">Import pupils</label>
-          <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Pupil name"/>
-          <input value="Import" type="submit" disabled={parsedPupils.length === 0}/>
+        <div className={styles.header}>
+          <h1>PUPYL</h1>
+          <p>Generate a seating plan for your classroom</p>
+        </div>
+        <div className={styles.pupils}>
+          <h2>Import your pupils</h2>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (newPupils.trim() === "") return;
+              setPupils([...pupils, ...parsedPupils]);
+              setNewPupils("");
+            }}
+            className={styles.newPupilForm}
+          >
+            <label htmlFor="pupil">Import pupils</label>
+            <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Comma-separated list of pupils"/>
+            <input value="Import" type="submit" disabled={parsedPupils.length === 0}/>
 
-          {newPupils !== "" && (
-            <span>{parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}</span>
-          )}
+            {newPupils !== "" && (
+              <span>{parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}</span>
+            )}
 
-          <div className={styles.pupilLine}>
-            <span className={styles.pupilCount}>{pupils.length} pupils</span>
+            <div className={styles.pupilLine}>
+              <span className={styles.pupilCount}>{pupils.length} pupils</span>
 
-            <button onClick={handleExportPupils} disabled={pupils.length === 0} className={styles.exportButton}>
-              Export pupils <LuClipboardCopy className={styles.exportIcon}/>
-            </button>
+              <button onClick={handleExportPupils} disabled={pupils.length === 0} className={styles.exportButton}>
+                Export pupils <LuClipboardCopy className={styles.exportIcon}/>
+              </button>
+            </div>
+          </form>
+
+          <div className={styles.pupilContainer}>
+            {pupils.sort().map((pupil: string, index: number) => (
+              <PupilCard
+                key={index}
+                pupil={pupil}
+                onRemove={() => {
+                  setPupils(pupils.filter((p, i) => i !== index));
+                  setRowConstraints(rowConstraints.filter(c => c.pupil !== pupil));
+                  setDistanceConstraints(distanceConstraints.filter(c => c.pupil1 !== pupil && c.pupil2 !== pupil));
+                }}
+                selfRowConstraint={rowConstraints.find(c => c.pupil === pupil)}
+                selfDistanceConstraints={distanceConstraints.filter(c => c.pupil1 === pupil || c.pupil2 === pupil)}
+              />
+            ))}
           </div>
-        </form>
-
-        <div className={styles.pupilContainer}>
-          {pupils.sort().map((pupil: string, index: number) => (
-            <PupilCard
-              key={index}
-              pupil={pupil}
-              onRemove={() => {
-                setPupils(pupils.filter((p, i) => i !== index));
-                setRowConstraints(rowConstraints.filter(c => c.pupil !== pupil));
-                setDistanceConstraints(distanceConstraints.filter(c => c.pupil1 !== pupil && c.pupil2 !== pupil));
-              }}
-              selfRowConstraint={rowConstraints.find(c => c.pupil === pupil)}
-              selfDistanceConstraints={distanceConstraints.filter(c => c.pupil1 === pupil || c.pupil2 === pupil)}
-            />
-          ))}
         </div>
       </section>
 
       <section className={styles.right}>
+        <h2>Generate a plan</h2>
         <button
           onClick={handleGenerate}
           disabled={pupils.length > selectedSeats.size}
