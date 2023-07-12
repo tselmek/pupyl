@@ -5,7 +5,7 @@ import styles from './page.module.css';
 
 import SeatTile from './SeatTile';
 import { Seat, SeatObject } from './algo';
-import { Dictionary } from 'lodash';
+import { Dictionary, range } from 'lodash';
 import Image from 'next/image';
 
 
@@ -44,30 +44,30 @@ export default function SeatsGrid({
 
       <div className={styles.gridContainer}>
         <div className={styles.columnButtons}>
-          {Array.from({length: rows}, (_, rowIndex) => (
-            <div key={rowIndex} className={styles.row}>
-              <Indicator content={rowIndex} />
+          {range(1, rows + 1).map((row) => (
+            <div key={row} className={styles.row}>
+              <Indicator content={row} />
             </div>
           ))}
         </div>
 
         <div className={styles.grid}>
           <div className={styles.row}>
-            {Array.from({length: columns}, (_, columnIndex) => (
-              <Indicator key={columnIndex} content={columnIndex} />
+            {range(1, columns + 1).map((column) => (
+              <Indicator key={column} content={column} />
             ))}
           </div>
 
-          {Array.from({length: rows}, (_, rowIndex) => (
-            <div key={rowIndex} className={styles.row}>
-              {Array.from({length: columns}, (_, columnIndex) => (
+          {range(1, rows + 1).map((row) => (
+            <div key={row} className={styles.row}>
+              {range(1, columns + 1).map((column) => (
                 <SeatTile
-                  key={columnIndex}
-                  row={rowIndex}
-                  column={columnIndex}
-                  selected={selectedSeats.has(`R${rowIndex}C${columnIndex}`)}
-                  pupil={planSeats?.[`R${rowIndex}C${columnIndex}`]?.pupil?.name}
-                  onClick={() => onClick(rowIndex, columnIndex)}
+                  key={column}
+                  row={row}
+                  column={column}
+                  selected={selectedSeats.has(`R${row}C${column}`)}
+                  pupil={planSeats?.[`R${row}C${column}`]?.pupil?.name}
+                  onClick={() => onClick(row, column)}
                 />
               ))}
             </div>

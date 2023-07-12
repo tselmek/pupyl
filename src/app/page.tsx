@@ -6,7 +6,7 @@ import SeatsGrid from './SeatsGrid';
 import { type Constraint, DistanceConstraintData, RowConstraintData, rowConstraintFrom, distanceConstraintFrom } from './Constraint';
 import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject } from './algo';
 import { PupilCard } from './PupilCard';
-import { Dictionary } from 'lodash';
+import { Dictionary, range } from 'lodash';
 import { ConstraintsEditor } from './ConstraintsEditor';
 import { LuClipboardCopy } from 'react-icons/lu';
 
@@ -120,7 +120,7 @@ export default function Home() {
   }
 
   const parsedPupils = newPupils.split(",").map(p => p.trim()).filter(p => p !== "");
-  const availableRows = Array.from({ length: rows }, (_, index) => index).filter(row => {
+  const availableRows = range(1, rows + 1).filter(row => {
     const rowString = `R${row}`;
     return Array.from(selectedSeats).some(seat => seat.startsWith(rowString));
   });
@@ -138,7 +138,7 @@ export default function Home() {
           className={styles.newPupilForm}
         >
           <label htmlFor="pupil">Import pupils</label>
-          <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Comma-separated list of pupil names"/>
+          <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Pupil name"/>
           <input value="Import" type="submit" disabled={parsedPupils.length === 0}/>
 
           {newPupils !== "" && (
