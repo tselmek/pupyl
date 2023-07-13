@@ -182,7 +182,7 @@ export default function Home() {
         <h2>Generate a plan</h2>
         <button
           onClick={handleGenerate}
-          disabled={pupils.length > selectedSeats.size}
+          disabled={pupils.length > selectedSeats.size || pupils.length === 0 || selectedSeats.size === 0}
         >
           Generate plan
         </button>
