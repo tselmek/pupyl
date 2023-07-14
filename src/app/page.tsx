@@ -62,7 +62,7 @@ export default function Home() {
   const handleRemoveRow = () => {
     const filteredSet = Array.from(selectedSeats).filter(seat => {
       const g = seat.match(/^R(\d+)C(\d+)$/)!;
-      return parseInt(g[1]) < rows - 1;
+      return parseInt(g[1]) < rows;
     });
     setSelectedSeats(new Set(filteredSet));
     setRows(rows - 1);
@@ -75,7 +75,7 @@ export default function Home() {
   const handleRemoveColumn = () => {
     const filteredSet = Array.from(selectedSeats).filter(seat => {
       const g = seat.match(/^R(\d+)C(\d+)$/)!;
-      return parseInt(g[2]) < columns - 1;
+      return parseInt(g[2]) < columns;
     });
     setSelectedSeats(new Set(filteredSet));
     setColumns(columns - 1);
