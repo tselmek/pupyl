@@ -4,11 +4,12 @@ import styles from './page.module.css'
 import { useState } from 'react';
 import SeatsGrid from './SeatsGrid';
 import { type Constraint, DistanceConstraintData, RowConstraintData, rowConstraintFrom, distanceConstraintFrom } from './Constraint';
-import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject } from './algo';
+import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject, PupilObject } from './algo';
 import { PupilCard } from './PupilCard';
-import { Dictionary } from 'lodash';
+import { Dictionary, range } from 'lodash';
 import { ConstraintsEditor } from './ConstraintsEditor';
 import { LuClipboardCopy } from 'react-icons/lu';
+import { FaMagic } from 'react-icons/fa';
 
 const ROWS = 4;
 const COLUMNS = 10;
@@ -26,6 +27,7 @@ export default function Home() {
   const [newPupils, setNewPupils] = useState<string>("");
 
   const [generatedPlanSeats, setGeneratedPlanSeats] = useState<Dictionary<SeatObject> | undefined>(undefined);
+  const [generatedPlanPupils, setGeneratedPlanPupils] = useState<Dictionary<PupilObject> | undefined>(undefined);
 
   const handleClick = (row: Row, column: Column) => {
     if (selectedSeats.has(`R${row}C${column}`)) {
@@ -50,6 +52,7 @@ export default function Home() {
     const [planPupils, planSeats] = generatePlan(pupils, seats, constraints);
 
     setGeneratedPlanSeats(planSeats);
+    setGeneratedPlanPupils(planPupils);
   }
 
   const handleAddRow = () => {
@@ -120,63 +123,79 @@ export default function Home() {
   }
 
   const parsedPupils = newPupils.split(",").map(p => p.trim()).filter(p => p !== "");
-  const availableRows = Array.from({ length: rows }, (_, index) => index).filter(row => {
+  const availableRows = range(1, rows + 1).filter(row => {
     const rowString = `R${row}`;
     return Array.from(selectedSeats).some(seat => seat.startsWith(rowString));
   });
 
+  const canGeneratePlan: boolean = pupils.length <= selectedSeats.size && pupils.length > 1 && selectedSeats.size > 1;
+
+  console.log("Pupils", generatedPlanPupils);
+
   return (
     <main className={styles.main}>
       <section className={styles.left}>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (newPupils.trim() === "") return;
-            setPupils([...pupils, ...parsedPupils]);
-            setNewPupils("");
-          }}
-          className={styles.newPupilForm}
-        >
-          <label htmlFor="pupil">Import pupils</label>
-          <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Comma-separated list of pupil names"/>
-          <input value="Import" type="submit" disabled={parsedPupils.length === 0}/>
+        <div className={styles.header}>
+          <h1>PUPYL</h1>
+          <p>Generate a seating plan for your <s>little demons</s> favorite classroom.</p>
+        </div>
+        <div className={styles.pupils}>
+          <h2>Import your pupils</h2>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (newPupils.trim() === "") return;
+              setPupils([...pupils, ...parsedPupils]);
+              setNewPupils("");
+            }}
+            className={styles.newPupilForm}
+          >
+            <label htmlFor="pupil" hidden>Import pupils</label>
+            <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Comma-separated list of pupils"/>
+            <input value="Import" type="submit" className={styles.action} disabled={parsedPupils.length === 0}/>
 
-          {newPupils !== "" && (
-            <span>{parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}</span>
-          )}
+            <span>
+              {newPupils !== "" && (<>
+                {parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}
+              </>)}
+            </span>
+          </form>
 
-          <div className={styles.pupilLine}>
+          <div className={styles.pupilDisplay}>
             <span className={styles.pupilCount}>{pupils.length} pupils</span>
 
-            <button onClick={handleExportPupils} disabled={pupils.length === 0} className={styles.exportButton}>
+            <button onClick={handleExportPupils} disabled={pupils.length === 0} className={styles.action}>
               Export pupils <LuClipboardCopy className={styles.exportIcon}/>
             </button>
           </div>
-        </form>
 
-        <div className={styles.pupilContainer}>
-          {pupils.sort().map((pupil: string, index: number) => (
-            <PupilCard
-              key={index}
-              pupil={pupil}
-              onRemove={() => {
-                setPupils(pupils.filter((p, i) => i !== index));
-                setRowConstraints(rowConstraints.filter(c => c.pupil !== pupil));
-                setDistanceConstraints(distanceConstraints.filter(c => c.pupil1 !== pupil && c.pupil2 !== pupil));
-              }}
-              selfRowConstraint={rowConstraints.find(c => c.pupil === pupil)}
-              selfDistanceConstraints={distanceConstraints.filter(c => c.pupil1 === pupil || c.pupil2 === pupil)}
-            />
-          ))}
+          <div className={styles.pupilContainer}>
+            {pupils.sort().map((pupil: string, index: number) => (
+              <PupilCard
+                key={index}
+                pupil={pupil}
+                pupilObject={generatedPlanPupils?.[pupil]}
+                onRemove={() => {
+                  setPupils(pupils.filter((p, i) => i !== index));
+                  setRowConstraints(rowConstraints.filter(c => c.pupil !== pupil));
+                  setDistanceConstraints(distanceConstraints.filter(c => c.pupil1 !== pupil && c.pupil2 !== pupil));
+                }}
+                selfRowConstraint={rowConstraints.find(c => c.pupil === pupil)}
+                selfDistanceConstraints={distanceConstraints.filter(c => c.pupil1 === pupil || c.pupil2 === pupil)}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       <section className={styles.right}>
+        <h2>Generate a plan</h2>
         <button
           onClick={handleGenerate}
-          disabled={pupils.length > selectedSeats.size}
+          className={styles.action}
+          disabled={!canGeneratePlan}
         >
-          Generate plan
+          Generate plan {canGeneratePlan && <FaMagic/>}
         </button>
 
         <SeatsGrid

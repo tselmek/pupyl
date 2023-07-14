@@ -5,17 +5,33 @@
   gap: calc(8 * var(--grid-gap));
 }
 
-.main > section {
-  border-radius: 16px;
-  padding: 24px;
-  background-image: url("../../public/cardboard.png");
-  box-shadow: 0px 2px 10px 2px #00000044;
-}
 
 .main > section.left {
+  padding: 0px;
+  border-radius: 0px;
   flex: 1;
   flex-basis: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--grid-gap));
+}
+
+.left .header {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 8px 16px;
+}
+
+.left .pupils {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 8px 24px;
+  flex: 1;
   background-color: var(--green-1-light);
+  background-image: url("../../public/cardboard.png");
+  box-shadow: 0px 2px 10px 2px #00000044;
+  display: flex;
+  flex-direction: column;
 }
 
 .left form {
@@ -23,13 +39,32 @@
   flex-direction: column;
   gap: calc(2 * var(--grid-gap));
   align-items: stretch;
+  margin-bottom: calc(4 * var(--grid-gap));
+}
+
+.pupilDisplay {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: calc(2 * var(--grid-gap));
+  margin-bottom: calc(2 * var(--grid-gap));
 }
 
 .pupilLine {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--grid-gap);
+}
+
+.pupilCount {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #000;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pushpinLeft {
@@ -60,21 +95,6 @@
   box-shadow: 0px 0px 4px 1px #00000044;
 }
 
-.exportButton {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: var(--grid-gap);
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
-  user-select: none;
-}
-
-.exportButton .exportIcon {
-  font-size: 24px;
-}
-
 .main > section.right {
   flex: 3;
   flex-basis: 600px;
@@ -82,11 +102,52 @@
   flex-direction: column;
   align-items: center;
   background-color: var(--beige);
+  border-radius: 16px;
+  padding: 24px;
+  padding-top: 8px;
+  background-image: url("../../public/cardboard.png");
+  box-shadow: 0px 2px 10px 2px #00000044;
 }
 
 .right > button {
   height: 40px;
   width: 200px;
+}
+
+.right > h2 {
+  align-self: flex-start;
+}
+
+.action {
+  background-color: #000;
+  border-radius: 8px;
+  color: #fff;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: calc(2 * var(--grid-gap));
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  user-select: none;
+  height: 36px;
+  font-weight: bold;
+  font-size: 14px;
+  border: none;
+}
+
+.action > svg {
+  font-size: 20px;
+}
+
+.action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action:hover {
+  background-color: #444;
 }
 
 .gridContainer {
@@ -255,11 +316,23 @@
 .pupilCard .pupilInfos {
   flex: 1;
   display: flex;
-  gap: var(--grid-gap);
+  gap: calc(2 * var(--grid-gap));
 }
 
 .pupilCard .pupilInfos .pupilName {
   font-weight: bold;
+}
+
+.pupilCard .pupilInfos .pupilSeat {
+  color: var(--green-1-dark);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--grid-gap);
+}
+
+.pupilCard .pupilInfos .pupilSeat svg {
+  margin-top: 0px;
 }
 
 .pupilCard button {
@@ -281,6 +354,10 @@
 
 .newPupilForm input {
   padding: 5px;
+}
+
+.newPupilForm span {
+  min-height: 2.5rem;
 }
 
 .pupilLine select[multiple] {

@@ -15,7 +15,6 @@ Classroom layout and pupil distribution plan generator
 4. Generate classroom plan
 
 
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)

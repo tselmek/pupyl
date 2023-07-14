@@ -20,6 +20,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         {children}
+        <footer>
+          ©PUPYL 2023. Created with ❤️ and ✨ by <a href="https://github.com/tselmek">Antoine Jésus</a>.
+        </footer>
       </body>
     </html>
   )

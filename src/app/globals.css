@@ -4,6 +4,7 @@
 
   --yellow: #f0e88b;
   --green-1: #71bca3;
+  --green-1-dark: #317455;
   --green-1-light: #c5e6d9;
   --beige: #fff9e3;
   --light-green: #d4dda2;
@@ -13,6 +14,7 @@
 html {
   margin: 0px;
   min-height: 100vh;
+  display: flex;
 }
 
 body {
@@ -20,7 +22,13 @@ body {
   background-color: #71bca3;
   background-image:  linear-gradient(#A9D6C7 1.3px, transparent 1.3px), linear-gradient(to right, #A9D6C7 1.3px, #71bca3 1.3px);
   background-size: 26px 26px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: calc(8 * var(--grid-gap));
 }
+
 
 select {
   font-size: 1rem;
@@ -47,4 +55,19 @@ table, th, td {
 
 button {
   background-color: transparent;
+}
+
+footer {
+  padding: 1rem;
+  background-color: #fff;
+  text-align: center;
+  color: #000;
+  border-radius: 16px;
+  margin: 0 auto;
+}
+
+input[type="text"] {
+  height: 24px;
+  border-radius: 8px;
+  border: 1px solid black;
 }
