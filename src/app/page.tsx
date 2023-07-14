@@ -4,12 +4,12 @@ import styles from './page.module.css'
 import { useState } from 'react';
 import SeatsGrid from './SeatsGrid';
 import { type Constraint, DistanceConstraintData, RowConstraintData, rowConstraintFrom, distanceConstraintFrom } from './Constraint';
-import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject } from './algo';
+import { type InputSeat, generatePlan, Row, Column, Seat, SeatObject, PupilObject } from './algo';
 import { PupilCard } from './PupilCard';
 import { Dictionary, range } from 'lodash';
 import { ConstraintsEditor } from './ConstraintsEditor';
 import { LuClipboardCopy } from 'react-icons/lu';
-import classNames from 'classnames';
+import { FaMagic } from 'react-icons/fa';
 
 const ROWS = 4;
 const COLUMNS = 10;
@@ -27,6 +27,7 @@ export default function Home() {
   const [newPupils, setNewPupils] = useState<string>("");
 
   const [generatedPlanSeats, setGeneratedPlanSeats] = useState<Dictionary<SeatObject> | undefined>(undefined);
+  const [generatedPlanPupils, setGeneratedPlanPupils] = useState<Dictionary<PupilObject> | undefined>(undefined);
 
   const handleClick = (row: Row, column: Column) => {
     if (selectedSeats.has(`R${row}C${column}`)) {
@@ -51,6 +52,7 @@ export default function Home() {
     const [planPupils, planSeats] = generatePlan(pupils, seats, constraints);
 
     setGeneratedPlanSeats(planSeats);
+    setGeneratedPlanPupils(planPupils);
   }
 
   const handleAddRow = () => {
@@ -126,12 +128,16 @@ export default function Home() {
     return Array.from(selectedSeats).some(seat => seat.startsWith(rowString));
   });
 
+  const canGeneratePlan: boolean = pupils.length <= selectedSeats.size && pupils.length > 1 && selectedSeats.size > 1;
+
+  console.log("Pupils", generatedPlanPupils);
+
   return (
     <main className={styles.main}>
       <section className={styles.left}>
         <div className={styles.header}>
           <h1>PUPYL</h1>
-          <p>Generate a seating plan for your classroom</p>
+          <p>Generate a seating plan for your <s>little demons</s> favorite classroom.</p>
         </div>
         <div className={styles.pupils}>
           <h2>Import your pupils</h2>
@@ -148,9 +154,11 @@ export default function Home() {
             <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Comma-separated list of pupils"/>
             <input value="Import" type="submit" className={styles.action} disabled={parsedPupils.length === 0}/>
 
-            {newPupils !== "" && (
-              <span>{parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}</span>
-            )}
+            <span>
+              {newPupils !== "" && (<>
+                {parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}
+              </>)}
+            </span>
           </form>
 
           <div className={styles.pupilDisplay}>
@@ -166,6 +174,7 @@ export default function Home() {
               <PupilCard
                 key={index}
                 pupil={pupil}
+                pupilObject={generatedPlanPupils?.[pupil]}
                 onRemove={() => {
                   setPupils(pupils.filter((p, i) => i !== index));
                   setRowConstraints(rowConstraints.filter(c => c.pupil !== pupil));
@@ -184,9 +193,9 @@ export default function Home() {
         <button
           onClick={handleGenerate}
           className={styles.action}
-          disabled={pupils.length > selectedSeats.size || pupils.length === 0 || selectedSeats.size === 0}
+          disabled={!canGeneratePlan}
         >
-          Generate plan
+          Generate plan {canGeneratePlan && <FaMagic/>}
         </button>
 
         <SeatsGrid

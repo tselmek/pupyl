@@ -316,11 +316,23 @@
 .pupilCard .pupilInfos {
   flex: 1;
   display: flex;
-  gap: var(--grid-gap);
+  gap: calc(2 * var(--grid-gap));
 }
 
 .pupilCard .pupilInfos .pupilName {
   font-weight: bold;
+}
+
+.pupilCard .pupilInfos .pupilSeat {
+  color: var(--green-1-dark);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--grid-gap);
+}
+
+.pupilCard .pupilInfos .pupilSeat svg {
+  margin-top: 0px;
 }
 
 .pupilCard button {
@@ -342,6 +354,10 @@
 
 .newPupilForm input {
   padding: 5px;
+}
+
+.newPupilForm span {
+  min-height: 2.5rem;
 }
 
 .pupilLine select[multiple] {

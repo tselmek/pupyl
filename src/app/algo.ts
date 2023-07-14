@@ -8,7 +8,7 @@ export type Id = number;
 export type Row = number;
 export type Column = number;
 
-type PupilObject = {
+export type PupilObject = {
   id: Id,
   name: Name,
   seat: SeatObject | null,
@@ -33,7 +33,7 @@ function parsePupils(pupils: Pupil[]): Dictionary<PupilObject> {
     } satisfies PupilObject
   ));
 
-  return keyBy(parsedPupils, "id");
+  return keyBy(parsedPupils, "name");
 }
 
 function parseSeats(seats: InputSeat[]): Dictionary<SeatObject> {
@@ -293,14 +293,7 @@ export const generatePlan = (
   const seats = parseSeats(inputSeats);
   const constraints = parseConstraints(inputConstraints, pupils);
 
-  console.log("Pupils", pupils);
-  console.log("Seats", seats);
-  console.log("Constraints", constraints);
-
   buildFirstSolution(constraints, pupils, seats);
-
-  console.log("Pupils", pupils);
-  console.log("Seats", seats);
 
   const bestScore = testVariations(constraints, pupils);
 
