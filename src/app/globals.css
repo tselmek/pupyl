@@ -28,6 +28,7 @@ body {
   gap: calc(8 * var(--grid-gap));
 }
 
+
 select {
   font-size: 1rem;
   padding: 0rem 0.25rem;
@@ -62,4 +63,10 @@ footer {
   color: #000;
   border-radius: 16px;
   margin: 0 auto;
+}
+
+input[type="text"] {
+  height: 24px;
+  border-radius: 8px;
+  border: 1px solid black;
 }

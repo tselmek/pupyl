@@ -9,6 +9,7 @@ import { PupilCard } from './PupilCard';
 import { Dictionary, range } from 'lodash';
 import { ConstraintsEditor } from './ConstraintsEditor';
 import { LuClipboardCopy } from 'react-icons/lu';
+import classNames from 'classnames';
 
 const ROWS = 4;
 const COLUMNS = 10;
@@ -143,22 +144,22 @@ export default function Home() {
             }}
             className={styles.newPupilForm}
           >
-            <label htmlFor="pupil">Import pupils</label>
+            <label htmlFor="pupil" hidden>Import pupils</label>
             <input id="pupil" value={newPupils} onChange={e => setNewPupils(e.target.value)} type="text" placeholder="Comma-separated list of pupils"/>
-            <input value="Import" type="submit" disabled={parsedPupils.length === 0}/>
+            <input value="Import" type="submit" className={styles.action} disabled={parsedPupils.length === 0}/>
 
             {newPupils !== "" && (
               <span>{parsedPupils.length} new pupil{parsedPupils.length > 1 ? "s" : ""} detected: {parsedPupils.join(", ")}</span>
             )}
-
-            <div className={styles.pupilLine}>
-              <span className={styles.pupilCount}>{pupils.length} pupils</span>
-
-              <button onClick={handleExportPupils} disabled={pupils.length === 0} className={styles.exportButton}>
-                Export pupils <LuClipboardCopy className={styles.exportIcon}/>
-              </button>
-            </div>
           </form>
+
+          <div className={styles.pupilDisplay}>
+            <span className={styles.pupilCount}>{pupils.length} pupils</span>
+
+            <button onClick={handleExportPupils} disabled={pupils.length === 0} className={styles.action}>
+              Export pupils <LuClipboardCopy className={styles.exportIcon}/>
+            </button>
+          </div>
 
           <div className={styles.pupilContainer}>
             {pupils.sort().map((pupil: string, index: number) => (
@@ -182,6 +183,7 @@ export default function Home() {
         <h2>Generate a plan</h2>
         <button
           onClick={handleGenerate}
+          className={styles.action}
           disabled={pupils.length > selectedSeats.size || pupils.length === 0 || selectedSeats.size === 0}
         >
           Generate plan
